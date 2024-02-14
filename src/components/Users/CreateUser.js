@@ -215,6 +215,7 @@ export default function CreateUser({
       onHide={handleCloseOffcanvas}
       placement="end"
       style={{ overflow: "auto" }}
+      className='create-user-offcanvas'
     >
       <Offcanvas.Header closeButton onClick={handleCloseOffcanvas}>
         <h5 style={{ fontSize: "14px", fontWeight: 500, color: "#000" }}>

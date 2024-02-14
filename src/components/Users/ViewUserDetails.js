@@ -7,10 +7,16 @@ import nonEmployee from "../../../src/assets/Images/icons/non-employee.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
 import EditUser from "./EditUser";
 import ChangePassword from "./ChangePassword";
+import ViewUserRequest from "./ViewUserRequest";
 
 const ViewUserDetails = ({ userID }) => {
   const [isOpenEditUser, setIsOpenEditUser] = useState(false);
   const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
+  const [openViewRequest, setOpenViewRequest] = useState(false);
+
+  const handleViewClick = (order) => {
+    setOpenViewRequest(true);
+  };
 
   return (
     <div className="content-body" style={{ marginLeft: 246 }}>
@@ -249,7 +255,7 @@ const ViewUserDetails = ({ userID }) => {
                         <td>
                           <button
                             className="btn btn-primary btn-sm"
-                            // onClick={() => handleViewClick()}
+                            onClick={() => handleViewClick()}
                           >
                             View Request
                           </button>
@@ -297,7 +303,10 @@ const ViewUserDetails = ({ userID }) => {
                           </span>
                         </td>
                         <td>
-                          <button className="btn btn-primary btn-sm">
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={() => handleViewClick()}
+                          >
                             View Request
                           </button>
                         </td>
@@ -347,7 +356,10 @@ const ViewUserDetails = ({ userID }) => {
                           </span>
                         </td>
                         <td>
-                          <button className="btn btn-primary btn-sm">
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={() => handleViewClick()}
+                          >
                             View Request
                           </button>
                         </td>
@@ -397,7 +409,10 @@ const ViewUserDetails = ({ userID }) => {
                           </span>
                         </td>
                         <td>
-                          <button className="btn btn-primary btn-sm">
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={() => handleViewClick()}
+                          >
                             View Request
                           </button>
                         </td>
@@ -435,7 +450,7 @@ const ViewUserDetails = ({ userID }) => {
           </div>
         </div>
       </div>
-      {/* {isOpenEditUser && (
+      {isOpenEditUser && (
         <EditUser
           // setIsContractorAdded={setIsContractorAdded}
           // isContractorAdded={isContractorAdded}
@@ -450,7 +465,10 @@ const ViewUserDetails = ({ userID }) => {
           setOpen={setIsOpenChangePassword}
           open={isOpenChangePassword}
         />
-      )} */}
+      )}
+      {openViewRequest && (
+        <ViewUserRequest open={openViewRequest} setOpen={setOpenViewRequest} />
+      )}
     </div>
   );
 };

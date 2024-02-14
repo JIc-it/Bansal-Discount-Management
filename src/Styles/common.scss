@@ -112,8 +112,15 @@
   justify-content: center;
 }
 
-.user-profile-section{
+.user-profile-section {
   align-items: center;
-    display: grid;
-
+  display: grid;
+  .name {
+    position: relative;
+    top: 1.5rem;
+  }
+  .email {
+    position: relative;
+    top: 1rem;
+  }
 }

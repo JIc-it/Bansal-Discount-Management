@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import employee from "../../../src/assets/Images/icons/employee-icon.png";
+import { useNavigate } from "react-router";
 import createNewUser from "../../../src/assets/Images/icons/user-create.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
 import CreateUser from "./CreateUser";
-import { useNavigate } from "react-router";
 
 const UsersMainPage = () => {
   const navigate = useNavigate();
   const [isOpenAddContractor, setIsOpenAddContractor] = useState(false);
 
   return (
-    <div className="content-body" style={{ width: "82vw", marginLeft: 246 }}>
+    <div className="content-body" style={{ marginLeft: 246 }}>
       <div className="container">
         <div className="col-xl-12">
           <div className="card">
@@ -162,7 +161,7 @@ const UsersMainPage = () => {
                         <td>
                           <button
                             className="btn btn-primary btn-sm"
-                            onClick={() =>navigate('/users-details/1234')}
+                            onClick={() => navigate("/users-details/1234")}
                           >
                             View User
                           </button>
@@ -207,7 +206,7 @@ const UsersMainPage = () => {
                         <td>
                           <button
                             className="btn btn-primary btn-sm"
-                            onClick={() =>navigate('/users-details/1234')}
+                            onClick={() => navigate("/users-details/1234")}
                           >
                             View User
                           </button>
