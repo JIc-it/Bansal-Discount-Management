@@ -5,7 +5,7 @@ import AllRouting from "./components/allRouting";
 import SideMenu from "./components/common/sideMenu";
 import "./App.css";
 import Login from "./components/auth/login";
-import ForgotPassword from "./components/forgotPassword";
+import ForgotPassword from "./components/auth/forgotPassword";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PromotionsHistory from "./components/promo/promotionsHistory";
@@ -19,6 +19,7 @@ import PrivacyPolicy from "./components/forgotPasswordPolicy";
 import "../src/Styles/global.scss";
 import Requests from "./pages/Requests";
 import Users from "./pages/Users";
+import EmailVerificationCode from "./components/auth/EmailVerificationCode";
 
 function App() {
   return (
@@ -43,25 +44,14 @@ function App() {
         theme="light"
       />
       <div style={{ display: "flex", flexDirection: "row" }}>
-        {/* <Navbar />
-        <SideMenu /> */}
-
         <Routes>
-          {/* <Route path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} /> */}
-          {/* Define your login route without Navbar and Sidebar */}
-          {/* <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
-          
-
-          {/* <Route path="/" element={<Requests />} /> */}
           <Route path="/" element={<Login />} />
+          
           <Route path="/login" element={<Login />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/verification/:id" element={<EmailVerificationCode />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/*" element={<MainPage />} />
-          {/* <Route path="/requests" element={<Requests />} />
-          <Route path="/users" element={<Users />} /> */}
         </Routes>
       </div>
     </div>

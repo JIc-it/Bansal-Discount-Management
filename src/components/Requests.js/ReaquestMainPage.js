@@ -12,7 +12,7 @@ const ReaquestMainPage = () => {
   };
 
   return (
-    <div className="content-body" style={{ width: "82vw", marginLeft: 246 }}>
+    <div className="content-body" style={{ marginLeft: 246 }}>
       {/* row */}
       <div className="container">
         <div className="col-xl-12">

@@ -96,10 +96,17 @@ const Login = () => {
             style={{ height: "100%", width: "100%" }}
           />
         </div>
-        <div className="col-lg-4">
+        <div
+          className="col-lg-6"
+          style={{
+            display: "grid",
+            // justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <div
             className="login-form"
-            style={{ position: "relative", top: "250px", left: "120px" }}
+            // style={{ position: "relative", top: "250px", left: "120px" }}
           >
             <form
               id="loginForm"
@@ -117,7 +124,7 @@ const Login = () => {
                   onChange={(e) =>
                     setCredentials({ ...credentials, email: e.target.value })
                   }
-                  placeholder="Unique id"
+                  placeholder="Email Address"
                   maxLength={50}
                 />
               </div>
@@ -161,11 +168,11 @@ const Login = () => {
                   Log In
                 </button>
               </div>
-              <div className="mb-4">
+              <div className="mb-4 text-end">
                 <a
                   href="/forgotpassword"
                   className="btn-link text-primary"
-                  style={{ marginLeft: "285px" }}
+                  // style={{ marginLeft: "285px" }}
                 >
                   Forgot Password?
                 </a>
@@ -173,6 +180,7 @@ const Login = () => {
             </form>
           </div>{" "}
         </div>
+        {/* <div className="col-lg-2"></div> */}
       </div>
     </div>
   );

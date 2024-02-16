@@ -124,3 +124,22 @@
     top: 1rem;
   }
 }
+
+.verification-form-container {
+  padding: 0 6rem;
+}
+
+.forgot-description {
+  font-size: 13px;
+  color: #000;
+  font-weight: 500;
+}
+.forgot-email {
+  font-size: 13px;
+  color: #0ba0dc;
+  font-weight: 500;
+  cursor: pointer;
+}
+.cursor-pointer {
+  cursor: pointer;
+}

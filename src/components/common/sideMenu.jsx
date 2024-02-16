@@ -63,33 +63,33 @@ export default function SideMenu() {
           className={`menu-item `}
           // onClick={() => toggle()}
         >
-          <div
-            className={` 
-          ${isMenuItemActive("/requests") ? "active-menu" : "menu-list"}`}
+          <Link
+            to="/requests"
+            style={{ color: "black" }}
+            className="menu-link "
           >
-            <Link
-              to="/requests"
-              style={{ color: "black" }}
-              className="menu-link "
+            <div
+              className={` 
+          ${isMenuItemActive("/requests") ? "active-menu" : "menu-list"}`}
             >
               <img src={requestIconDark} alt="" className="menu-icon" />
               <span>Requests</span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </MenuItem>
         <MenuItem
           className={`menu-item `}
           // onClick={() => toggle()}
         >
-          <div
-            className={` 
+          <Link to="/users" style={{ color: "black" }} className="menu-link ">
+            <div
+              className={` 
           ${isMenuItemActive("/users") ? "active-menu" : "menu-list"}`}
-          >
-            <Link to="/users" style={{ color: "black" }} className="menu-link ">
+            >
               <img src={userIcon} alt="" className="menu-icon" />
               <span>Users</span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </MenuItem>
       </Menu>
     </Sidebar>

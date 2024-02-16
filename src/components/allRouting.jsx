@@ -20,7 +20,7 @@ import PromotionsHistory from "./promo/promotionsHistory";
 import Profile from "./profile/profile";
 import AxiosCRUDComponent from "./contractorAxios";
 import Login from "./auth/login";
-import ForgotPassword from "./forgotPassword";
+import ForgotPassword from "./auth/forgotPassword";
 import ViewContractor from "./user/Contractor/ViewContractor";
 import Distributors from "./user/Distributor/distributor";
 import ViewDistributorDetails from "./user/Distributor/ViewDistributorDetails";
@@ -45,6 +45,7 @@ export default function AllRouting() {
       <Routes>
         <Route index element={<Login />} />
         <Route path="/requests" element={<Requests />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users-details/:id" element={<UserDetails />} />
 

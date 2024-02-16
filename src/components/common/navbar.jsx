@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getProfileRequest } from "../../axiosHandle/profileHandle";
 import { NotificationList } from "../../axiosHandle/userHandle";
 import Notification from "../../assets/notification";
@@ -27,6 +27,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 const defaultOption = options[0];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [profile_data, setProfileData] = useState({
     name: "",
     user_id: "",
@@ -90,7 +91,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div
+      {/* <div
         className="nav-header"
         style={{
           height: "70px",
@@ -102,7 +103,7 @@ export default function Navbar() {
           borderColor: "#efefef",
         }}
       >
-        <a href="/dashboard" className="brand-logo">
+        <a href="/requests" className="brand-logo">
           <img
             src={logo}
             alt="Bansal Logo"
@@ -111,7 +112,7 @@ export default function Navbar() {
             style={{ marginLeft: "65px" }}
           />
         </a>
-      </div>
+      </div> */}
       <div
         className="header"
         style={{
@@ -125,37 +126,22 @@ export default function Navbar() {
       >
         <div className="header-content" style={{ paddingLeft: "30px" }}>
           <nav className="navbar navbar-expand">
-            <div className="collapse navbar-collapse justify-content-between">
-              <div className="header-left px-4">
-                <form>
-                  <div className="input-group search-area">
-                    {/* <input type="text" className="form-control" placeholder="Search" /> */}
-                    {/* <span className="input-group-text">
-                                            <button className="bg-transparent border-0">
-                                                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <circle cx="8.78605" cy="8.78605" r="8.23951" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                                    <path d="M14.5168 14.9447L17.7471 18.1667" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            </button>
-                                        </span> */}
-                  </div>
-                </form>
-              </div>
+            <div className="collapse navbar-collapse justify-content-end">
               <ul className="navbar-nav header-right">
-                <li className="nav-item dropdown notification_dropdown">
+                {/* <li className="nav-item dropdown notification_dropdown">
                   <div className="dropdown-menu dropdown-menu-end">
                     <div
                       id="DZ_W_Notification1"
                       className="widget-media dz-scroll p-3"
                       style={{ height: "380px" }}
-                    >
+                    > */}
                       {/* Notification items go here */}
-                    </div>
+                    {/* </div>
                     <a className="all-notification" href="/">
                       See all notifications <i className="ti-arrow-end"></i>
                     </a>
                   </div>
-                </li>
+                </li> */}
                 <div
                   onClick={() => setShowNotifications(true)}
                   style={{ position: "relative", top: "15px" }}
@@ -211,17 +197,23 @@ export default function Navbar() {
                       </div>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">
-                        <Link to="/profile">Profile </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">
-                        <Link
-                          // to="/login"
-                          style={{ color: "#888888" }}
-                        >
-                          Logout{" "}
-                        </Link>
-                      </Dropdown.Item>
+                      <Link
+                        to="/profile"
+                        onClick={() => {
+                          navigate("/profile");
+                        }}
+                      >
+                        <Dropdown.Item>Profile</Dropdown.Item>
+                      </Link>
+                      <Link
+                        to="/login"
+                        style={{ color: "#888888" }}
+                        onClick={() => {
+                          navigate("/login");
+                        }}
+                      >
+                        <Dropdown.Item>Logout </Dropdown.Item>
+                      </Link>
                     </Dropdown.Menu>
                   </Dropdown>
                 </li>

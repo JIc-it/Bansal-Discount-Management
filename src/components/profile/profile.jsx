@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getProfileRequest } from "../../axiosHandle/profileHandle";
+import leftArrow from "../../../src/assets/Images/icons/arrow-left.png";
 
 export default function Profile() {
   const [profile_data, setProfileData] = useState({
@@ -34,13 +35,24 @@ export default function Profile() {
       {/* row */}
       <div className="container">
         <div style={{ display: "flex", cursor: "pointer" }}>
-          <a href='/dashboard'>
-            <img src="/assets/Arrow Left.png" />
-          </a>
-
-          <h5 className="mb-0" style={{ marginLeft: "15px" }}>
+          <div
+            className="mb-0"
+            style={{
+              display: "flex",
+              marginLeft: "15px",
+              fontSize: "14px",
+              color: "#000",
+            }}
+          >
+            <div
+              className="back-icon-area cursor-pointer"
+              style={{ fontSize: "12px" }}
+            >
+              <img src={leftArrow} alt="leftArrow" />
+              <span className="mx-2">Back</span>
+            </div>
             Profile
-          </h5>
+          </div>
         </div>
         <br></br>
         <div className="row" style={{ marginLeft: "4px" }}>
@@ -53,7 +65,7 @@ export default function Profile() {
                       <div className="d-flex align-items-center">
                         <div className="event-box">
                           <h5 className="mt-2" style={{ color: "black" }}>
-                            {profile_data.name.slice(0,2).toUpperCase()}
+                            {profile_data.name.slice(0, 2).toUpperCase()}
                           </h5>
                         </div>
                       </div>
