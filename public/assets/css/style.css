@@ -18000,9 +18000,9 @@ html[dir="rtl"]
 }
 
 .content-body {
-  margin-left: 15rem;
   z-index: 0;
   transition: all 0.2s ease;
+  padding:  10px 2px;
 }
 @media only screen and (max-width: 47.9375rem) {
   .content-body {
@@ -20586,30 +20586,30 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   [data-header-position="fixed"][data-layout="horizontal"] .content-body {
     padding-top: 3.125rem;
   }
-  [data-sidebar-position="static"][data-layout="horizontal"]
+  /* [data-sidebar-position="static"][data-layout="horizontal"]
     .content-body
     .page-titles {
     margin-top: 0;
   }
-}
+} */
 
 [data-header-position="fixed"][data-sidebar-position="fixed"] .deznav {
   position: fixed;
 }
 
-[data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"]
+/* [data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"]
   .content-body {
   padding-top: 6.525rem;
-}
+} */
 
-[data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"][data-sidebar-style="modern"]
+/* [data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"][data-sidebar-style="modern"]
   .content-body {
   padding-top: 8.025rem;
-}
+} */
 
-[data-layout="horizontal"][data-container="boxed"] .content-body {
+/* [data-layout="horizontal"][data-container="boxed"] .content-body {
   padding-top: 12rem !important;
-}
+} */
 
 [data-layout="horizontal"][data-container="boxed"] .footer {
   margin-left: 0;
@@ -20753,10 +20753,10 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   display: none;
 }
 
-[data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"][data-sidebar-style="compact"]
+/* [data-header-position="fixed"][data-layout="horizontal"][data-sidebar-position="fixed"][data-sidebar-style="compact"]
   .content-body {
   padding-top: 11.125rem;
-}
+} */
 
 [data-sidebar-position="fixed"][data-layout="horizontal"] .deznav.fixed {
   position: fixed;
@@ -20908,9 +20908,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   [data-sidebar-style="compact"] .footer {
     padding-left: 12.5rem;
   }
-  [data-sidebar-style="compact"] .content-body {
+  /* [data-sidebar-style="compact"] .content-body {
     margin-left: 10.5rem;
-  }
+  } */
   [data-sidebar-style="compact"][data-theme-version="dark"][data-layout="horizontal"]
     .deznav
     .metismenu
@@ -20943,9 +20943,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   padding-left: 0;
 }
 
-[data-layout="horizontal"][data-sidebar-style="compact"] .content-body {
+/* [data-layout="horizontal"][data-sidebar-style="compact"] .content-body {
   margin-left: 0;
-}
+} */
 
 [data-layout="horizontal"][data-sidebar-style="compact"] .deznav {
   margin-bottom: 0;
@@ -21406,14 +21406,14 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     .menu-title {
     display: block;
   }
-  [data-sidebar-style="icon-hover"][data-layout="vertical"] .content-body {
+  /* [data-sidebar-style="icon-hover"][data-layout="vertical"] .content-body {
     margin-left: 5.2rem;
-  }
-  [direction="rtl"][data-sidebar-style="icon-hover"][data-layout="vertical"]
+  } */
+  /* [direction="rtl"][data-sidebar-style="icon-hover"][data-layout="vertical"]
     .content-body {
     margin-left: 0;
     margin-right: 7rem;
-  }
+  } */
   [data-sidebar-style="icon-hover"][data-layout="vertical"] .footer {
     padding-left: 7rem;
   }
@@ -21716,11 +21716,11 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   [data-sidebar-style="modern"][data-layout="vertical"] .menu-toggle .header {
     padding-left: 0;
   }
-  [data-sidebar-style="modern"][data-layout="vertical"]
+  /* [data-sidebar-style="modern"][data-layout="vertical"]
     .menu-toggle
     .content-body {
     margin-left: 0;
-  }
+  } */
   [data-sidebar-style="modern"][data-layout="horizontal"] .nav-header {
     width: 18.563rem;
   }
@@ -55231,12 +55231,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-right: 21.563rem;
   margin-left: auto;
 }
-[data-sidebar-style="modern"][direction="rtl"] .content-body {
+/* [data-sidebar-style="modern"][direction="rtl"] .content-body {
   margin-right: 9.375rem;
-}
-[direction="rtl"] .content-body .page-titles {
+} */
+/* [direction="rtl"] .content-body .page-titles {
   text-align: right;
-}
+} */
 [direction="rtl"] .doctor-info-details .media-body span i,
 [direction="rtl"] .recovered-chart-deta .col [class*="bg-"] {
   margin-right: 0;
@@ -55522,9 +55522,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 0 5px 5px 0;
   box-shadow: 5px 3px 5px 0px rgba(119, 119, 119, 0.15);
 }
-[direction="rtl"][data-layout="horizontal"] .content-body {
+/* [direction="rtl"][data-layout="horizontal"] .content-body {
   margin-right: 0;
-}
+} */
 [direction="rtl"][data-layout="horizontal"]
   .deznav
   .metismenu
@@ -55534,17 +55534,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   -webkit-transform: rotate(-4deg) translateY(-50%);
   transform: rotate(-45deg) translateY(-50%);
 }
-[direction="rtl"][data-sidebar-style="mini"]:not([data-layout="horizontal"])
+/* [direction="rtl"][data-sidebar-style="mini"]:not([data-layout="horizontal"])
   .content-body {
   margin-right: 6.25rem;
-}
-[direction="rtl"][data-sidebar-style="compact"]:not([data-layout="horizontal"])
+} */
+/* [direction="rtl"][data-sidebar-style="compact"]:not([data-layout="horizontal"])
   .content-body {
   margin-right: 11.25rem;
-}
-[direction="rtl"][data-sidebar-style="overlay"] .content-body {
+} */
+/* [direction="rtl"][data-sidebar-style="overlay"] .content-body {
   margin-right: 0;
-}
+} */
 [direction="rtl"] #external-events .external-event:before {
   margin-right: 0;
   margin-left: 0.9rem;
@@ -55676,11 +55676,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 0;
 }
 
-@media only screen and (max-width: 1350px) and (min-width: 1200px) {
+/* @media only screen and (max-width: 1350px) and (min-width: 1200px) {
   [direction="rtl"] .content-body {
     margin-right: 17rem;
   }
-}
+} */
 
 [direction="rtl"] .sidebar-right {
   right: auto;
@@ -57419,3 +57419,8 @@ html[dir="rtl"]
   right: 385px;
   bottom: 20px;
 }
+
+
+.header-info{
+  padding-right: 1rem;
+}}

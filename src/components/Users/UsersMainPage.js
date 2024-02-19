@@ -9,7 +9,7 @@ const UsersMainPage = () => {
   const [isOpenAddContractor, setIsOpenAddContractor] = useState(false);
 
   return (
-    <div className="content-body" style={{ marginLeft: 246 }}>
+    <div className="content-body" >
       <div className="container">
         <div className="col-xl-12">
           <div className="card">

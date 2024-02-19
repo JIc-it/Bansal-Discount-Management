@@ -8,8 +8,6 @@ import NotificationsOpen from "./notifications";
 import logo from "../../assets/Images/logo.png";
 import downArrow from "../../assets/Images/icons/down-arrow.png";
 
-const options = ["one", "two", "three"];
-
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
     href=""
@@ -24,10 +22,9 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </a>
 ));
 
-const defaultOption = options[0];
-
 export default function Navbar() {
   const navigate = useNavigate();
+
   const [profile_data, setProfileData] = useState({
     name: "",
     user_id: "",
@@ -54,12 +51,10 @@ export default function Navbar() {
       });
   }, []);
 
-  const [message, setMessage] = useState("");
   const [count, setCount] = useState(0);
   const [dataList, setDataList] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const showNotification = (condition) => {
-    console.log("condition", condition);
     setShowNotifications(condition, showNotifications);
   };
 
@@ -68,20 +63,6 @@ export default function Navbar() {
       .then((data) => {
         console.log("data", data);
         setCount(data.count);
-        setMessage(data.results.message);
-        setDataList(data.results);
-      })
-      .catch((error) => {
-        console.error("Error fetching profile:", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    NotificationList()
-      .then((data) => {
-        console.log("data", data);
-        setCount(data.count);
-        setMessage(data.results.message);
         setDataList(data.results);
       })
       .catch((error) => {
@@ -114,20 +95,20 @@ export default function Navbar() {
         </a>
       </div> */}
       <div
-        className="header"
-        style={{
-          height: "70px",
-          position: "fixed",
-          top: "0px",
-          left: "250px",
-          right: "0px",
-          boxShadow: " 0px 2px 10px 0px #00000012",
-        }}
+        className="navbar-header"
+        // style={{
+        //   height: "70px",
+        //   position: "fixed",
+        //   top: "0px",
+        //   // left: "250px",
+        //   right: "0px",
+        //   boxShadow: " 0px 2px 10px 0px #00000012",
+        // }}
       >
-        <div className="header-content" style={{ paddingLeft: "30px" }}>
-          <nav className="navbar navbar-expand">
-            <div className="collapse navbar-collapse justify-content-end">
-              <ul className="navbar-nav header-right">
+        <div className="header-content">
+          <nav className="">
+            <div className="justify-content-end">
+              <ul className=" header-right">
                 {/* <li className="nav-item dropdown notification_dropdown">
                   <div className="dropdown-menu dropdown-menu-end">
                     <div
@@ -135,8 +116,8 @@ export default function Navbar() {
                       className="widget-media dz-scroll p-3"
                       style={{ height: "380px" }}
                     > */}
-                      {/* Notification items go here */}
-                    {/* </div>
+                {/* Notification items go here */}
+                {/* </div>
                     <a className="all-notification" href="/">
                       See all notifications <i className="ti-arrow-end"></i>
                     </a>

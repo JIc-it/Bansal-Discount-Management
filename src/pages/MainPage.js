@@ -36,10 +36,18 @@ const MainPage = () => {
 
   return (
     <AppContext.Provider value={{ permissionData }}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <Navbar />
-        <SideMenu />
-        <AllRouting />
+      <div style={{ display: "flex", flexDirection: "row" }} className="w-100">
+        <div
+          style={{
+            width: "250px",
+          }}
+        >
+          <SideMenu />
+        </div>
+        <div className="main-page-container">
+          <Navbar />
+          <AllRouting />
+        </div>
       </div>
     </AppContext.Provider>
   );

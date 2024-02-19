@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { getModulePermission } from "../../axiosHandle/authHandle";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import logo from "../../assets/Images/logo.png";
 
 const getUserPermissions = (id) => {
   const getUserPermission = `/account/custom_permission/retrieve/${id}/`;
@@ -53,11 +54,24 @@ export default function SideMenu() {
         position: "fixed", // Make the sidebar fixed
         top: 0, // Stick it to the top
         bottom: 0, // Extend it to the bottom
-        width: "240px", // Set the desired width
+        // width: "240px", // Set the desired width
         color: "white",
-        marginTop: "70px",
+        // marginTop: "70px",
       }}
     >
+      <a href="/requests" className="brand-logo  ">
+        <img
+          src={logo}
+          alt="Bansal Logo"
+          width="70"
+          height="45"
+          style={{
+            marginLeft: "65px",
+            marginTop: "1rem",
+            marginBottom: "1rem",
+          }}
+        />
+      </a>
       <Menu className="menu-container">
         <MenuItem
           className={`menu-item `}
