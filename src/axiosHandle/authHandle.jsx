@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-// const API_BASE_URL = 'https://bansal.jicitsolution.com/';
-const API_BASE_URL = 'https://api.bansalsale.com/';
+
+const API_BASE_URL = 'https://api.bansal.hospital.jicitsolution.com/';
 const REFRESH_URL = '/api/token/refresh/';
 const VERIFY_URL = '/api/token/verify/';
-const GENERATE_URL = '/account/token/';
+const GENERATE_URL = '/api/token/';
 const LOGOUT_URL = 'api/token/blacklist/';
 const permissionURL = 'account/custom_permission/retrieve';
+const getOTPFromEmailUrl = "/account/request-otp/";
+const verifyOTPUrl='/account/verify-otp/'
+const resetForgotPasswordUrl='/account/forgot-reset-password/'
 
 const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -123,3 +126,35 @@ export const getModulePermission = (id) => {
             throw error;
         });
 };
+
+export const getOTPFromEmail = (email) => {
+    return axiosInstance
+      .post(getOTPFromEmailUrl, { email: email })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Error while logout:", error);
+        throw error;
+      });
+  };
+  
+
+  export const verifyOTP = (data) => {
+    return axiosInstance
+      .post(verifyOTPUrl, data)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error("Error while logout:", error);
+        throw error;
+      });
+  };
+  
+
+  export const resetLoginpassword = (data) => {
+    return axiosInstance
+      .post(resetForgotPasswordUrl, data)
+      .then((response) => response)
+      .catch((error) => {
+        console.error("Error while logout:", error);
+        throw error;
+      });
+  };

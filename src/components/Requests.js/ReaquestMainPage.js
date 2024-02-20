@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import employee from "../../../src/assets/Images/icons/employee-icon.png";
 import nonEmployee from "../../../src/assets/Images/icons/non-employee.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
@@ -6,6 +6,12 @@ import ViewRequest from "./ViewRequest";
 
 const ReaquestMainPage = () => {
   const [openViewRequest, setOpenViewRequest] = useState(false);
+  const [requestListData, setRequestListData] = useState()
+
+  useEffect(() => {
+   
+  }, [])
+  
 
   const handleViewClick = (order) => {
     setOpenViewRequest(true);

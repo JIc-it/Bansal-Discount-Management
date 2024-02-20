@@ -20,6 +20,7 @@ import "../src/Styles/global.scss";
 import Requests from "./pages/Requests";
 import Users from "./pages/Users";
 import EmailVerificationCode from "./components/auth/EmailVerificationCode";
+import ResetLoginPassword from "./components/auth/ResetLoginPassword";
 
 function App() {
   return (
@@ -45,11 +46,11 @@ function App() {
       />
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Routes>
-          <Route path="/" element={<Login />} />
-          
+          <Route path="/" element={<Login />} />         
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/verification/:id" element={<EmailVerificationCode />} />
+          <Route path="/verification/:id/:userID" element={<EmailVerificationCode />} />
+          <Route path="/resetloginpassword/:id" element={<ResetLoginPassword />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/*" element={<MainPage />} />
         </Routes>

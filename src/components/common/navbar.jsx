@@ -37,6 +37,7 @@ export default function Navbar() {
     getProfileRequest()
       .then((data) => {
         console.log(" getProfileRequest data", data);
+        
         setProfileData((prevData) => ({
           ...prevData,
           name: data.name,
@@ -156,7 +157,7 @@ export default function Navbar() {
                       >
                         <div className="header-info2 d-flex align-items-center">
                           <div className="header-media">
-                            {profile_data.name.slice(0, 2).toUpperCase()}
+                            {profile_data.name?.slice(0, 2).toUpperCase()}
                           </div>
                           <div className="header-info">
                             <h6 style={{ color: "#000" }}>

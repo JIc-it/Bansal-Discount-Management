@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getProfileRequest } from "../../axiosHandle/profileHandle";
 import leftArrow from "../../../src/assets/Images/icons/arrow-left.png";
+import { useNavigate } from "react-router";
 
 export default function Profile() {
+  const navigate=useNavigate()
   const [profile_data, setProfileData] = useState({
     name: "",
     user_id: "",
@@ -31,7 +33,7 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className="content-body" style={{ width: "82vw", marginLeft: 245 }}>
+    <div className="content-body" >
       {/* row */}
       <div className="container">
         <div style={{ display: "flex", cursor: "pointer" }}>
@@ -48,7 +50,7 @@ export default function Profile() {
               className="back-icon-area cursor-pointer"
               style={{ fontSize: "12px" }}
             >
-              <img src={leftArrow} alt="leftArrow" />
+              <img src={leftArrow} alt="leftArrow" onClick={()=>(navigate(-1))} />
               <span className="mx-2">Back</span>
             </div>
             Profile
@@ -65,7 +67,7 @@ export default function Profile() {
                       <div className="d-flex align-items-center">
                         <div className="event-box">
                           <h5 className="mt-2" style={{ color: "black" }}>
-                            {profile_data.name.slice(0, 2).toUpperCase()}
+                            {profile_data.name?.slice(0, 2).toUpperCase()}
                           </h5>
                         </div>
                       </div>
@@ -91,16 +93,16 @@ export default function Profile() {
                     <br />
                     <span>Mobile:</span>
                     <br />
-                    <span>Location:</span>
-                    <br />
+                    {/* <span>Location:</span>
+                    <br /> */}
                   </div>
                   <div className="col-sm-6 text-right">
                     <span>{profile_data.email}</span>
                     <br />
                     <span>{profile_data.mobile}</span>
                     <br />
-                    <span>{profile_data.district_name}</span>
-                    <br />
+                    {/* <span>{profile_data.district_name}</span>
+                    <br /> */}
                   </div>
                 </div>
               </div>

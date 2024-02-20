@@ -1,6 +1,6 @@
 import axiosInstance from "./authHandle";
 
-const profileURL = '/account/view/';
+const profileURL = '/account/current-user/';
 
 
 

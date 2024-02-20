@@ -164,6 +164,18 @@
   padding-right: 1rem;
 }
 
-.header-right{
+.header-right {
   display: flex;
+}
+
+.error-message {
+  color: #ca5858;
+}
+
+.eye-icon-position{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

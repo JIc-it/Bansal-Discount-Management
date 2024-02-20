@@ -1,13 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import leftArrow from "../../../src/assets/Images/icons/arrow-left.png";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { getOTPFromEmail, verifyOTP } from "../../axiosHandle/authHandle";
+import { toast } from "react-toastify";
 
 const EmailVerificationCode = () => {
   const params = useParams();
   const navigate = useNavigate();
   const emailID = params?.id;
+  const userID = params?.userID;
 
-  const handleLogin = () => {};
+  const [isLoading, setIsLoading] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      verificationOTP: "",
+      submit: null,
+    },
+    validationSchema: Yup.object({
+      verificationOTP: Yup.string().required("Verification OTP is required"),
+    }),
+    onSubmit: async (values, helpers) => {
+      try {
+        setIsLoading(true);
+        verifyOTP({ otp: values.verificationOTP, user_id: userID })
+          .then((data) => {
+            navigate(`/resetloginpassword/${userID}`);
+            toast.success("OTP Verified Successfully.");
+            // setIsLoading(false);
+          })
+          .catch((error) => {
+            helpers.setStatus({ success: false });
+            helpers.setErrors({ submit: error.response.data?.detail }); // Set the error message in formik
+            helpers.setSubmitting(false);
+            console.error("Error fetching lead data:", error);
+          });
+        setIsLoading(false);
+      } catch (err) {
+        helpers.setStatus({ success: false });
+        // helpers.setErrors({ submit: err.message });
+        helpers.setSubmitting(false);
+        setIsLoading(false); // Reset loading state on error
+      }
+    },
+  });
+
+  const resendMail = async () => {
+    getOTPFromEmail(emailID)
+      .then((data) => {
+        toast.success("OTP sent successfully.");
+      })
+      .catch((error) => {
+        toast.error("error in get OTP.");
+      });
+  };
+
   return (
     <div className="authincation">
       <div className="row">
@@ -28,7 +77,7 @@ const EmailVerificationCode = () => {
           <div className="verification-form-container">
             <form
               id="loginForm"
-              action="https://w3crm.dexignzone.com/xhtml/index.html"
+              onSubmit={formik.handleSubmit}
               autoComplete="off"
             >
               <div className="mb-4">
@@ -48,34 +97,43 @@ const EmailVerificationCode = () => {
                   <span className="mx-2">Back</span>
                 </div>
                 <span className="forgot-description ">
-                  The verification code has been sent to <span className="forgot-email">{emailID}</span>
+                  The verification code has been sent to{" "}
+                  <span className="forgot-email">{emailID}</span>
                 </span>
                 <div className="my-2">
-                  <span className="forgot-email"  onClick={() => {
-                    navigate("/forgotpassword");
-                  }}>Change Email</span>
-                  <span className="forgot-email mx-2">Resend Email</span>
+                  <span
+                    className="forgot-email"
+                    onClick={() => {
+                      navigate("/forgotpassword");
+                    }}
+                  >
+                    Change Email
+                  </span>
+                  <span className="forgot-email mx-2" onClick={resendMail}>Resend Email</span>
                 </div>
                 <input
                   type="text"
                   className="form-control "
-                  // value={credentials.email}
-                  // onChange={(e) =>
-                  //   setCredentials({ ...credentials, email: e.target.value })
-                  // }
+                  name="verificationOTP"
+                  value={formik.values.verificationOTP}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   placeholder="Verification Code"
                   maxLength={50}
                 />
+                {formik.touched.verificationOTP &&
+                formik.errors.verificationOTP ? (
+                  <div className="error">{formik.errors.verificationOTP}</div>
+                ) : null}
               </div>
 
               <div className="text-center mb-4">
-                <button
-                  type="button"
-                  className="btn btn-primary btn-block"
-                  onClick={handleLogin}
-                >
+                <button type="submit" className="btn btn-primary btn-block mb-2">
                   Verify{" "}
                 </button>
+                {formik.errors.submit && (
+                  <span color="error " style={{ color: "#b94b4b" }}>{formik.errors.submit}</span>
+                )}
               </div>
             </form>
           </div>
