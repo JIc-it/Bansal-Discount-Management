@@ -4,6 +4,7 @@ import { loginRequest } from "../../axiosHandle/authHandle";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import logotemp from "../../../src/assets/Images/login.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -58,10 +59,18 @@ const Login = () => {
     <div className="authincation">
       <div className="row">
         <div className="col-md-6">
-          <img
-            src="/assets/login_banner.png"
-            style={{ height: "100%", width: "100%" }}
-          />
+          <h1
+            style={{
+              color: "#fff",
+              position: "absolute",
+              top: "23%",
+              left: "3%",
+            }}
+          >
+            Bansal Discount Management
+          </h1>
+
+          <img src={logotemp} style={{ height: "100%", width: "100%" }} />
         </div>
         <div
           className="col-md-6"
@@ -110,7 +119,7 @@ const Login = () => {
                   placeholder="Password"
                   maxLength={20}
                   onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       e.preventDefault(); // Prevent the default form submission
                       formik.handleSubmit(); // Trigger form submission manually
                     }

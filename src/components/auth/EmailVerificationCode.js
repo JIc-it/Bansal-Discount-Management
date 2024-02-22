@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getOTPFromEmail, verifyOTP } from "../../axiosHandle/authHandle";
 import { toast } from "react-toastify";
+import logotemp from '../../../src/assets/Images/login.png'
 
 const EmailVerificationCode = () => {
   const params = useParams();
@@ -61,8 +62,19 @@ const EmailVerificationCode = () => {
     <div className="authincation">
       <div className="row">
         <div className="col-lg-6">
+        <h1
+            style={{
+              color: "#fff",
+              position: "absolute",
+              top: "23%",
+              left: "3%",
+            }}
+          >
+            Bansal Discount Management
+          </h1>
+
           <img
-            src="/assets/login_banner.png"
+            src={logotemp}
             style={{ height: "100%", width: "100%" }}
           />
         </div>

@@ -3,15 +3,22 @@ import employee from "../../../src/assets/Images/icons/employee-icon.png";
 import nonEmployee from "../../../src/assets/Images/icons/non-employee.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
 import ViewRequest from "./ViewRequest";
+import { getDiscountRequest } from "../../axiosHandle/discountRequestService";
 
 const ReaquestMainPage = () => {
   const [openViewRequest, setOpenViewRequest] = useState(false);
-  const [requestListData, setRequestListData] = useState()
+  const [requestListData, setRequestListData] = useState();
 
   useEffect(() => {
-   
-  }, [])
-  
+    getDiscountRequest()
+      .then((data) => {
+        console.log(" Request list data", data);
+        setRequestListData(data.results);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+  }, []);
 
   const handleViewClick = (order) => {
     setOpenViewRequest(true);
@@ -115,219 +122,119 @@ const ReaquestMainPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {/* {currentItems.length > 0 ? (
-                    currentItems.map((order) => ( */}
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>1234</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>Arjun</h6>
-                        </td>
-                        <td>
-                          <button className="btn btn-light btn-sm">
-                            <img src={employee} alt="" />
-                            <span className="mx-1">Employee</span>
-                          </button>
-                        </td>
-                        <td>
-                          <h6>RS 1000/-</h6>
-                        </td>
+                      {requestListData && requestListData.length > 0 ? (
+                        requestListData.map((item) => {
+                          const calculatedDiscountPercentage = (
+                            (item.discount_amount / item.bill_amount) *
+                            100
+                          ).toFixed();
 
-                        <td>
-                          <h6>
-                            RS 1000/-{" "}
-                            <span style={{ color: "#A8CF45" }}>(20%)</span>{" "}
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>Patel</h6>
-                        </td>
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{ color: "#a8cf45", background: "#f9f9f9" }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#a8cf45" }}
-                            ></div>
-                            Approved
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-primary btn-sm"
-                            onClick={() => handleViewClick()}
-                          >
-                            View Request
-                          </button>
-                        </td>
-                      </tr>
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>1234</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>Arjun</h6>
-                        </td>
-                        <td>
-                          <button className="btn btn-light btn-sm">
-                            <img src={nonEmployee} alt="" />
-                            <span className="mx-1">Non Employee</span>
-                          </button>
-                        </td>
-                        <td>
-                          <h6>RS 1000/-</h6>
-                        </td>
+                          return (
+                            <tr key={`request-list-${item.id}`}>
+                              <td>
+                                <h6>1234</h6>
+                              </td>
 
-                        <td>
-                          <h6>
-                            RS 1000/-{" "}
-                            <span style={{ color: "#A8CF45" }}>(20%)</span>{" "}
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>Patel</h6>
-                        </td>
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{ color: "#004F8F", background: "#DEF0FC" }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#004F8F" }}
-                            ></div>
-                            Completed
-                          </span>
-                        </td>
-                        <td>
-                          <button className="btn btn-primary btn-sm">
-                            View Request
-                          </button>
-                        </td>
-                      </tr>
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>1234</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>Arjun</h6>
-                        </td>
-                        <td>
-                          <button className="btn btn-light btn-sm">
-                            <img src={nonEmployee} alt="" />
-                            <span className="mx-1">Non Employee</span>
-                          </button>
-                        </td>
-                        <td>
-                          <h6>RS 1000/-</h6>
-                        </td>
+                              <td>
+                                <h6>Arun</h6>
+                              </td>
+                              <td>
+                                <h6>{item?.initiated_by?.name || "-"}</h6>
+                              </td>
+                              <td>
+                                <button className="btn btn-light btn-sm">
+                                  <img
+                                    src={
+                                      item.relation_type === "Employee"
+                                        ? employee
+                                        : nonEmployee
+                                    }
+                                    alt=""
+                                  />
+                                  <span className="mx-1">
+                                    {item?.relation_type}
+                                  </span>
+                                </button>
+                              </td>
+                              <td>
+                                <h6>{`RS ${item?.bill_amount || 0}/-`}</h6>
+                              </td>
 
-                        <td>
-                          <h6>
-                            RS 1000/-{" "}
-                            <span style={{ color: "#A8CF45" }}>(20%)</span>{" "}
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>Patel</h6>
-                        </td>
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{
-                              color: "#890B0B",
-                              background: " #F8E2E2     ",
-                            }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#890B0B" }}
-                            ></div>
-                            Rejected
-                          </span>
-                        </td>
-                        <td>
-                          <button className="btn btn-primary btn-sm">
-                            View Request
-                          </button>
-                        </td>
-                      </tr>
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>1234</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>Arjun</h6>
-                        </td>
-                        <td>
-                          <button className="btn btn-light btn-sm">
-                            <img src={nonEmployee} alt="" />
-                            <span className="mx-1">Non Employee</span>
-                          </button>
-                        </td>
-                        <td>
-                          <h6>RS 1000/-</h6>
-                        </td>
-
-                        <td>
-                          <h6>
-                            RS 1000/-{" "}
-                            <span style={{ color: "#A8CF45" }}>(20%)</span>{" "}
-                          </h6>
-                        </td>
-                        <td>
-                          <h6>Patel</h6>
-                        </td>
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{
-                              color: "#A75400",
-                              background: " #FCECDA  ",
-                            }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#A75400" }}
-                            ></div>
-                            Pending
-                          </span>
-                        </td>
-                        <td>
-                          <button className="btn btn-primary btn-sm">
-                            View Request
-                          </button>
-                        </td>
-                      </tr>
-                      {/* ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5">No orders available</td>
-                    </tr>
-                  )} */}
+                              <td>
+                                <h6>
+                                  <h6
+                                    style={{
+                                      display: "inline-flex",
+                                    }}
+                                  >{`RS ${item?.discount_amount || 0}/-`}</h6>
+                                  <span style={{ color: "#A8CF45" }}>
+                                    {`(${calculatedDiscountPercentage}%)`}
+                                  </span>{" "}
+                                </h6>
+                              </td>
+                              <td>
+                                <h6>{item?.approve_authority?.name || "-"}</h6>
+                              </td>
+                              <td>
+                                <span
+                                  className="status-requests"
+                                  style={{
+                                    color:
+                                      item.status == "Approved"
+                                        ? "#a8cf45"
+                                        : item.status == "Pending"
+                                        ? "#A75400"
+                                        : item.status == "Rejected"
+                                        ? "#890B0B"
+                                        : item.status == "Completed"
+                                        ? "#004F8F"
+                                        : "",
+                                    background:
+                                      item.status == "Approved"
+                                        ? "#f9f9f9"
+                                        : item.status == "Pending"
+                                        ? "#FCECDA"
+                                        : item.status == "Rejected"
+                                        ? "#F8E2E2"
+                                        : item.status == "Completed"
+                                        ? "#DEF0FC"
+                                        : "",
+                                  }}
+                                >
+                                  <div
+                                    className="mx-2 square-dot"
+                                    style={{
+                                      background:
+                                        item.status == "Approved"
+                                          ? "#a8cf45"
+                                          : item.status == "Pending"
+                                          ? "#A75400"
+                                          : item.status == "Rejected"
+                                          ? "#890B0B"
+                                          : item.status == "Completed"
+                                          ? "#004F8F"
+                                          : "",
+                                    }}
+                                  ></div>
+                                  {item.status}
+                                </span>
+                              </td>
+                              <td>
+                                <button
+                                  className="btn btn-primary btn-sm"
+                                  onClick={() => handleViewClick()}
+                                >
+                                  View Request
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      ) : (
+                        <tr>
+                          <td colSpan="5">No orders available</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>

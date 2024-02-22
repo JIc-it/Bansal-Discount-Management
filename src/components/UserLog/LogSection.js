@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { getLogRequest } from "../../axiosHandle/logHandle";
 import UserDetails from "./userDetails";
+import { getLogRequest } from "../../axiosHandle/logHandle";
 
 function LogSection() {
   const [user_log_data, setUserLogData] = useState(null);
