@@ -113,7 +113,7 @@ export default function EditUser({
         <div className="user-image-section my-2">
           {formik.values.profilePicture ? (
             <img
-              src={URL.createObjectURL(formik.values.profilePicture)}
+              src={userListData?.profilePicture}
               alt="Uploaded Profile Picture"
               style={{ width: 100, height: 100, marginTop: 10 }}
             />

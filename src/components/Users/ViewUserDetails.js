@@ -475,8 +475,6 @@ const ViewUserDetails = () => {
       </div>
       {isOpenEditUser && (
         <EditUser
-          // setIsContractorAdded={setIsContractorAdded}
-          // isContractorAdded={isContractorAdded}
           userListData={userListData}
           setOpen={setIsOpenEditUser}
           open={isOpenEditUser}
@@ -484,8 +482,7 @@ const ViewUserDetails = () => {
       )}
       {isOpenChangePassword && (
         <ChangePassword
-          // setIsContractorAdded={setIsContractorAdded}
-          // isContractorAdded={isContractorAdded}
+          userID={userID}
           setOpen={setIsOpenChangePassword}
           open={isOpenChangePassword}
         />
