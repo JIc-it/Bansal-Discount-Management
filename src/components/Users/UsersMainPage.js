@@ -1,15 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import createNewUser from "../../../src/assets/Images/icons/user-create.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
 import CreateUser from "./CreateUser";
+import { removeBaseUrlFromPath } from "../../helper";
+import { getListDataInPagination } from "../../axiosHandle/commonServicesHandle";
+import { getUsers } from "../../axiosHandle/usersServices";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const UsersMainPage = () => {
   const navigate = useNavigate();
   const [isOpenAddContractor, setIsOpenAddContractor] = useState(false);
+  const [isLodaing, setIsLoading] = useState(false);
+  const [userListData, setUserListData] = useState();
+  const [listPageUrl, setListPageUrl] = useState({
+    next: null,
+    previous: null,
+  });
+  const [isRefetch, setIsRefetch] = useState(false);
+  const [requestSearch, setRequestSearch] = useState("");
+  const [seletedStatus, setSeletedStatus] = useState("");
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUsers(requestSearch, seletedStatus)
+      .then((data) => {
+        console.log(" Request list data", data);
+        setUserListData(data.results);
+        setListPageUrl({ next: data.next, previous: data.previous });
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+    setIsLoading(false);
+  }, [isRefetch, requestSearch, seletedStatus]);
+
+  const handlePagination = async (type) => {
+    setIsLoading(true);
+    let convertedUrl =
+      type === "next"
+        ? listPageUrl.next && removeBaseUrlFromPath(listPageUrl.next)
+        : type === "prev"
+        ? listPageUrl.previous && removeBaseUrlFromPath(listPageUrl.previous)
+        : null;
+    convertedUrl &&
+      getListDataInPagination(convertedUrl)
+        .then((data) => {
+          setIsLoading(false);
+          setListPageUrl({ next: data.next, previous: data.previous });
+          setUserListData(data?.results);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          // toast.error(error.message);
+          console.error("Error fetching  data:", error);
+        });
+  };
 
   return (
-    <div className="content-body" >
+    <div className="content-body">
       <div className="container">
         <div className="col-xl-12">
           <div className="card">
@@ -48,6 +97,9 @@ const UsersMainPage = () => {
                           placeholder="Search..."
                           aria-label="Search..."
                           aria-describedby="search-button"
+                          onChange={(e) => {
+                            setRequestSearch(e.target.value);
+                          }}
                         />
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -78,13 +130,16 @@ const UsersMainPage = () => {
                         type="text"
                         style={{ minWidth: 200 }}
                         className="form-select mb-3 status_selector"
+                        onChange={(e) => {
+                          setSeletedStatus(e.target.value);
+                        }}
                       >
                         <option value="" disabled selected>
                           All Status
                         </option>
-                        <option value="All">All</option>
-                        <option value="1">Active</option>
-                        <option value="2">Inactive</option>
+                        <option value="">All</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
                       </select>
                     </div>
                   </div>
@@ -115,131 +170,110 @@ const UsersMainPage = () => {
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
-
-                        <th className="text-end">Action</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {/* {currentItems.length > 0 ? (
-                    currentItems.map((order) => ( */}
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>0001</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>MOD</h6>
-                        </td>
-                        <td>
-                          <h6>Arun@gmail.com</h6>
-                        </td>
+                      {!isLodaing ? (
+                        userListData && userListData.length > 0 ? (
+                          userListData.map((item) => {
+                            return (
+                              <tr key={`request-list-${item.id}`}>
+                                <td>
+                                  <h6>{item?.account_id || "-"}</h6>
+                                </td>
 
-                        <td>
-                          <h6>+919897456123</h6>
-                        </td>
+                                <td>
+                                  <h6>{item?.name || "-"}</h6>
+                                </td>
+                                <td>
+                                  <h6>{item?.role || "-"}</h6>
+                                </td>
 
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{
-                              color: "#a8cf45",
-                              background: "#f9f9f9",
-                              width: "6rem",
-                            }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#a8cf45" }}
-                            ></div>
-                            Active
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-primary btn-sm"
-                            onClick={() => navigate("/users-details/1234")}
-                          >
-                            View User
-                          </button>
-                        </td>
-                      </tr>
-                      <tr
-                      // key={order.id}
-                      >
-                        <td>
-                          <h6>0001</h6>
-                        </td>
-                        <td>
-                          <h6>Arun</h6>
-                        </td>
-                        <td>
-                          <h6>MD</h6>
-                        </td>
-                        <td>
-                          <h6>Arun@gmail.com</h6>
-                        </td>
+                                <td>
+                                  <h6>{item?.email || "-"}</h6>
+                                </td>
 
-                        <td>
-                          <h6>+919897456123</h6>
-                        </td>
+                                <td>
+                                  <h6>{item?.mobile || "-"}</h6>
+                                </td>
 
-                        <td>
-                          <span
-                            className="status-requests"
-                            style={{
-                              color: "#890B0B",
-                              background: " #F8E2E2",
-                              width: "6rem",
-                            }}
-                          >
-                            <div
-                              className="mx-2 square-dot"
-                              style={{ background: "#890B0B" }}
-                            ></div>
-                            Inactive
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-primary btn-sm"
-                            onClick={() => navigate("/users-details/1234")}
-                          >
-                            View User
-                          </button>
-                        </td>
-                      </tr>
-                      {/* ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5">No orders available</td>
-                    </tr>
-                  )} */}
+                                <td>
+                                  <span
+                                    className="status-requests"
+                                    style={{
+                                      color: "#a8cf45",
+                                      background: "#f9f9f9",
+                                      width: "6rem",
+                                    }}
+                                  >
+                                    <div
+                                      className="mx-2 square-dot"
+                                      style={{ background: "#a8cf45" }}
+                                    ></div>
+                                    Active
+                                  </span>
+                                </td>
+                                <td>
+                                  <button
+                                    className="btn btn-primary btn-sm"
+                                    onClick={() =>
+                                      navigate(`/users-details/${item.id}`)
+                                    }
+                                  >
+                                    View User
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        ) : (
+                          <tr>
+                            <td colSpan="5">No orders available</td>
+                          </tr>
+                        )
+                      ) : (
+                        <tr>
+                          <td colSpan="5">
+                            <CircularProgress />
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
+                    )
                   </table>
                 </div>
-                <div className="col-12">
-                  <div className="btn-group" style={{ float: "right" }}>
+              </div>
+              <div className="d-flex ">
+                <ul className="pagination m-0 ms-auto my-2">
+                  <li
+                    className={`page-item  ${
+                      !listPageUrl.previous && "disabled"
+                    }`}
+                  >
                     <button
                       className="btn btn-light btn-sm"
-                      // onClick={handlePreviousPage}
-                      // disabled={currentPage === 1}
+                      onClick={() => {
+                        handlePagination("prev");
+                      }}
                     >
                       Previous
                     </button>
-                    &nbsp;
+                  </li>
+
+                  <li
+                    className={`page-item  ${!listPageUrl.next && "disabled"}`}
+                  >
                     <button
-                      className="btn btn-light btn-sm"
-                      // onClick={handleNextPage}
-                      // disabled={currentPage === totalPages}
+                      className="btn btn-light btn-sm mx-2 "
+                      onClick={() => {
+                        handlePagination("next");
+                      }}
                     >
                       Next
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -247,8 +281,8 @@ const UsersMainPage = () => {
       </div>
       {isOpenAddContractor && (
         <CreateUser
-          // setIsContractorAdded={setIsContractorAdded}
-          // isContractorAdded={isContractorAdded}
+          setIsRefetch={setIsRefetch}
+          isRefetch={isRefetch}
           setOpen={setIsOpenAddContractor}
           open={isOpenAddContractor}
         />

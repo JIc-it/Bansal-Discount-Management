@@ -118,6 +118,7 @@
   .name {
     position: relative;
     top: 1.5rem;
+    text-align: center;
   }
   .email {
     position: relative;
@@ -172,11 +173,16 @@
   color: #ca5858;
 }
 
-.eye-icon-position{
+.eye-icon-position {
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
 }
-.logo-banner{}
+.request-status-button {
+  height: 20px;
+  margin-right: 10px;
+  position: relative;
+  top: 4px;
+}

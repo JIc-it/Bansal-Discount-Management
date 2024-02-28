@@ -1,9 +1,10 @@
 import axiosInstance from "./authHandle";
-const discountRequestURL = "/discount/";
 
-export const getDiscountRequest = (requestSearch, seletedStatus) => {
+const getusersList = "/account/users/";
+
+export const getUsers = (requestSearch, seletedStatus) => {
   return axiosInstance
-    .get(discountRequestURL, {
+    .get(getusersList, {
       params: {
         search: requestSearch || "",
         status: seletedStatus || "",
@@ -16,9 +17,19 @@ export const getDiscountRequest = (requestSearch, seletedStatus) => {
     });
 };
 
-export const getIndivitualDiscountRequest = (id) => {
+export const createUsers = (data) => {
   return axiosInstance
-    .get(`${discountRequestURL}${id}`)
+    .post(getusersList, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.error("Error while fetching lead request:", error);
+      throw error;
+    });
+};
+
+export const getUserDetailsByID = (id) => {
+  return axiosInstance
+    .get(`${getusersList}${id}`)
     .then((response) => response.data)
     .catch((error) => {
       console.error("Error while fetching lead request:", error);

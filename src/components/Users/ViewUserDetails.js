@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import leftArrow from "../../../src/assets/Images/icons/arrow-left.png";
 import editIcon from "../../../src/assets/Images/icons/edit-icon.png";
 import passwordIcon from "../../../src/assets/Images/icons/change-password-icon.png";
@@ -8,9 +8,15 @@ import exportIcon from "../../../src/assets/Images/icons/export.png";
 import EditUser from "./EditUser";
 import ChangePassword from "./ChangePassword";
 import ViewUserRequest from "./ViewUserRequest";
+import { useNavigate, useParams } from "react-router";
+import { getUserDetailsByID } from "../../axiosHandle/usersServices";
 
-const ViewUserDetails = ({ userID }) => {
+const ViewUserDetails = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const userID = params?.id;
   const [isOpenEditUser, setIsOpenEditUser] = useState(false);
+  const [userListData, setUserListData] = useState();
   const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
   const [openViewRequest, setOpenViewRequest] = useState(false);
 
@@ -18,11 +24,26 @@ const ViewUserDetails = ({ userID }) => {
     setOpenViewRequest(true);
   };
 
+  useEffect(() => {
+    getUserDetailsByID(userID)
+      .then((data) => {
+        setUserListData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+  }, [userID]);
+
   return (
     <div className="content-body">
       <div className="container">
         <div className="col-xl-12">
-          <div className="back-icon-area">
+          <div
+            className="back-icon-area cursor-pointer"
+            onClick={() => {
+              navigate("/users");
+            }}
+          >
             <img src={leftArrow} alt="leftArrow" />
             <span className="mx-2">Back</span>
           </div>
@@ -37,10 +58,12 @@ const ViewUserDetails = ({ userID }) => {
                         display: "flex",
                       }}
                     >
-                      <div className="profile-header-media">SU</div>
+                      <div className="profile-header-media">
+                        {userListData?.name.substring(0, 2).toUpperCase()}
+                      </div>
                     </div>
-                    <h4 className="name">Abhijith Prem</h4>
-                    <span className="email">abi@gmail.com</span>
+                    <h4 className="name">{userListData?.name}</h4>
+                    <span className="email">{userListData?.email}</span>
                     <br />
                     <span
                       className="btn btn-primary btn-sm"
@@ -50,7 +73,7 @@ const ViewUserDetails = ({ userID }) => {
                         cursor: "text",
                       }}
                     >
-                      MOD
+                      {userListData?.role}
                     </span>
                   </div>
                 </div>
@@ -58,11 +81,11 @@ const ViewUserDetails = ({ userID }) => {
                   <div className="email-phone-details">
                     <div className="email-details">
                       <span>Email Address</span>
-                      <h4>abi@gmail.com</h4>
+                      <h4>{userListData?.email}</h4>
                     </div>
                     <div className="phone-details">
                       <span>Phone</span>
-                      <h4>9876543210</h4>
+                      <h4>{userListData && userListData?.mobile}</h4>
                     </div>
                   </div>
                   <div className="active-user">
@@ -454,6 +477,7 @@ const ViewUserDetails = ({ userID }) => {
         <EditUser
           // setIsContractorAdded={setIsContractorAdded}
           // isContractorAdded={isContractorAdded}
+          userListData={userListData}
           setOpen={setIsOpenEditUser}
           open={isOpenEditUser}
         />

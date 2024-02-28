@@ -3,25 +3,69 @@ import employee from "../../../src/assets/Images/icons/employee-icon.png";
 import nonEmployee from "../../../src/assets/Images/icons/non-employee.png";
 import exportIcon from "../../../src/assets/Images/icons/export.png";
 import ViewRequest from "./ViewRequest";
-import { getDiscountRequest } from "../../axiosHandle/discountRequestService";
+import {
+  getDiscountRequest,
+  getIndivitualDiscountRequest,
+} from "../../axiosHandle/discountRequestService";
+import { removeBaseUrlFromPath } from "../../helper";
+import { getListDataInPagination } from "../../axiosHandle/commonServicesHandle";
 
 const ReaquestMainPage = () => {
   const [openViewRequest, setOpenViewRequest] = useState(false);
   const [requestListData, setRequestListData] = useState();
+  const [listPageUrl, setListPageUrl] = useState({
+    next: null,
+    previous: null,
+  });
+  const [seletedRequestData, setSeletedRequestData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [requestSearch, setRequestSearch] = useState("");
+  const [seletedStatus, setSeletedStatus] = useState("");
 
   useEffect(() => {
-    getDiscountRequest()
+    getDiscountRequest(requestSearch, seletedStatus)
       .then((data) => {
         console.log(" Request list data", data);
         setRequestListData(data.results);
+        setListPageUrl({ next: data.next, previous: data.previous });
       })
       .catch((error) => {
         console.error("Error fetching profile:", error);
       });
-  }, []);
+  }, [requestSearch, seletedStatus]);
 
-  const handleViewClick = (order) => {
+  const handleViewClick = async (id) => {
     setOpenViewRequest(true);
+    setSeletedRequestData(id);
+    getIndivitualDiscountRequest(id)
+      .then((data) => {
+        setSeletedRequestData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+  };
+
+  const handlePagination = async (type) => {
+    setIsLoading(true);
+    let convertedUrl =
+      type === "next"
+        ? listPageUrl.next && removeBaseUrlFromPath(listPageUrl.next)
+        : type === "prev"
+        ? listPageUrl.previous && removeBaseUrlFromPath(listPageUrl.previous)
+        : null;
+    convertedUrl &&
+      getListDataInPagination(convertedUrl)
+        .then((data) => {
+          setIsLoading(false);
+          setListPageUrl({ next: data.next, previous: data.previous });
+          setRequestListData(data?.results);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          // toast.error(error.message);
+          console.error("Error fetching  data:", error);
+        });
   };
 
   return (
@@ -65,6 +109,9 @@ const ReaquestMainPage = () => {
                           placeholder="Search..."
                           aria-label="Search..."
                           aria-describedby="search-button"
+                          onChange={(e) => {
+                            setRequestSearch(e.target.value);
+                          }}
                         />
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -95,15 +142,18 @@ const ReaquestMainPage = () => {
                         type="text"
                         style={{ minWidth: 200 }}
                         className="form-select mb-3 status_selector"
+                        onChange={(e) => {
+                          setSeletedStatus(e.target.value);
+                        }}
                       >
                         <option value="" disabled selected>
                           All Status
                         </option>
-                        <option value="All">All</option>
-                        <option value="1">Accepted</option>
-                        <option value="2">Completed</option>
-                        <option value="3">Pending</option>
-                        <option value="4">Rejected</option>
+                        <option value="">All</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Rejected">Rejected</option>
                       </select>
                     </div>
                   </div>
@@ -222,7 +272,7 @@ const ReaquestMainPage = () => {
                               <td>
                                 <button
                                   className="btn btn-primary btn-sm"
-                                  onClick={() => handleViewClick()}
+                                  onClick={() => handleViewClick(item.id)}
                                 >
                                   View Request
                                 </button>
@@ -238,32 +288,48 @@ const ReaquestMainPage = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="col-12">
-                  <div className="btn-group" style={{ float: "right" }}>
+              </div>
+              <div className="d-flex ">
+                <ul className="pagination m-0 ms-auto my-2">
+                  <li
+                    className={`page-item  ${
+                      !listPageUrl.previous && "disabled"
+                    }`}
+                  >
                     <button
                       className="btn btn-light btn-sm"
-                      // onClick={handlePreviousPage}
-                      // disabled={currentPage === 1}
+                      onClick={() => {
+                        handlePagination("prev");
+                      }}
                     >
                       Previous
                     </button>
-                    &nbsp;
+                  </li>
+
+                  <li
+                    className={`page-item  ${!listPageUrl.next && "disabled"}`}
+                  >
                     <button
-                      className="btn btn-light btn-sm"
-                      // onClick={handleNextPage}
-                      // disabled={currentPage === totalPages}
+                      className="btn btn-light btn-sm mx-2 "
+                      onClick={() => {
+                        handlePagination("next");
+                      }}
                     >
                       Next
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {openViewRequest && (
-        <ViewRequest open={openViewRequest} setOpen={setOpenViewRequest} />
+      {openViewRequest && seletedRequestData && (
+        <ViewRequest
+          open={openViewRequest}
+          setOpen={setOpenViewRequest}
+          requestListData={seletedRequestData}
+        />
       )}
     </div>
   );

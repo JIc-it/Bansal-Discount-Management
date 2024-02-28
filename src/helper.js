@@ -18,11 +18,21 @@ export const convertToDateTime = (standardTime) => {
   return formattedDateTime;
 };
 
-
 export const removeBaseUrlFromPath = (originalString) => {
   var modifiedString = originalString.replace(
     "https://api.bansalsale.com/",
     ""
   );
   return modifiedString;
+};
+
+export const convertDateFormat = (dateString) => {
+  const date = new Date(dateString);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  return formattedDate;
 };
